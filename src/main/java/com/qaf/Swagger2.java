@@ -25,17 +25,19 @@ public class Swagger2 {
 
 	@Bean
 	public Docket createRestApi() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
+		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
+				.select()
 				// 为当前包路径
-				.apis(RequestHandlerSelectors.basePackage("com.qaf.controller")).paths(PathSelectors.any()).build();
+				.apis(RequestHandlerSelectors.basePackage("com.qaf.controller"))
+				.paths(PathSelectors.any()).build();
 	}
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				// 页面标题
-				.title("Spring Boot 测试使用 Swagger2 构建RESTful API")
+				.title("Spring Boot 使用 Swagger2 构建 RESTful API")
 				// 创建人
-				.contact(new Contact("Eric Chow", "549987523@qq.com", ""))
+				.contact(new Contact("Eric Chow", "", "549987523@qq.com"))
 				// 版本号
 				.version("1.0")
 				// 描述
