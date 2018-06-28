@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,11 +41,10 @@ public class QAFHomeController {
 
 	@ApiOperation(value = "登录获取凭证", notes = "登录")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "userName", value = "用户名", paramType = "query", required = true, dataType = "String"),
-			@ApiImplicitParam(name = "passWord", value = "用户密码", paramType = "query", required = true, dataType = "String")})
+			@ApiImplicitParam(name = "userName", value = "用户名", paramType = "form", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "passWord", value = "用户密码", paramType = "form", required = true, dataType = "String")})
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public R login(@RequestParam String userName,
-			@RequestParam String passWord) {
+	public R login(String userName, String passWord) {
 		if ("admin".equals(userName) && "qwer`123".equals(passWord)) {
 			String token = UUID.randomUUID().toString().replace("-", "")
 					.toUpperCase();
@@ -70,11 +68,11 @@ public class QAFHomeController {
 
 	@ApiOperation(value = "根据出生年份计算当前年龄", notes = "计算年龄")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "year", value = "出生年份", paramType = "path", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "year", value = "出生年份", paramType = "query", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "token", value = "用户凭证", paramType = "header", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "uid", value = "用户ID", paramType = "header", required = true, dataType = "String")})
-	@RequestMapping(value = "age/{year}", method = RequestMethod.POST)
-	public R printAge(@PathVariable String year,
+	@RequestMapping(value = "age", method = RequestMethod.POST)
+	public R printAge(@RequestParam("year") String year,
 			@RequestHeader("token") String token,
 			@RequestHeader("uid") String uid) {
 		R r = checkUser(token, uid);
