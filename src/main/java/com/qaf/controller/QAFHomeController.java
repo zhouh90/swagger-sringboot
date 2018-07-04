@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,6 +18,7 @@ import com.qaf.cache.MyCache;
 import com.qaf.entity.TokenEntity;
 import com.qaf.exception.NotNullException;
 import com.qaf.utils.DateUtils;
+import com.qaf.utils.IPUtil;
 import com.qaf.utils.MD5Util;
 import com.qaf.utils.R;
 
@@ -38,6 +41,12 @@ public class QAFHomeController {
 
 	@Autowired
 	private MyCache cache;
+
+	@ApiOperation(value = "获取本机IP")
+	@RequestMapping("myip")
+	public String getIp(HttpServletRequest request) {
+		return IPUtil.getIpAddress(request);
+	}
 
 	@ApiOperation(value = "登录获取凭证", notes = "登录")
 	@ApiImplicitParams({
